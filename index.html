@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="node_modules/typescript/lib/typescript.js"></script>
+    <script>
+        function transpileCode() {
+            var source = document.getElementById('sourceCode').value;
+            var result = ts.transpileModule(source, {
+                compilerOptions: { module: ts.ModuleKind.System, allowJs: true }
+            });
+            document.getElementById('output').value = result.outputText;
+        }
+        window.onload = transpileCode;
+    </script>
+    <style>
+        .code-area {
+            width: 100%;
+            min-height: 200px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <button onclick="transpileCode()">Transpile</button>
+    <div>Source code:</div>
+    <textarea id="sourceCode" class="code-area">
+import * as theModule from 'someModule';
+
+let myObj = {
+    handler: () => {
+        let f = function(val) {
+            return theModule.someFunction();
+        }
+        f();
+    }
+};    
+    </textarea>
+    <div>Output:</div>
+    <textarea id="output" class="code-area" readonly></textarea>
+</body>
+
+</html>
